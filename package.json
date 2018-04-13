@@ -1,0 +1,15 @@
+{
+  "name": "naiveco2calculator",
+  "version": "1.0.0",
+  "description": "A naive CO2 emission calculator.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thierry Girard",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Thierry-girard/naiveco2calculatorModule.git"
+  }
+}
