@@ -20,19 +20,31 @@ const transilien = "transilien";
  */
 const emissionLevel = {marche: 0, velo : 0, metro : 3.8, rer : 3.9, tramway : 3.1, bus : 95.4, voiture : 206, transilien : 6.4}
 
-
+/**
+ * Convert a value in degree to radian
+ * @param {number} degrees - Value in degree to convert
+ * 
+ * @returns {number} - Value converted to radian
+ */
 function degreesToRadians(degrees) {
     return degrees * Math.PI / 180;
 }
 
-function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+/**
+ * Calculate the distance in Kilometers between two Gps points
+ * @param {gpsPoint} coor1 
+ * @param {gpsPoint} coor2
+ * 
+ * @return {number} - Distance between the two points
+ */
+function distanceInKmBetweenEarthCoordinates(coor1, coor2) {
   const earthRadiusKm = 6371;
 
-  const dLat = degreesToRadians(lat2-lat1);
-  const dLon = degreesToRadians(lon2-lon1);
+  const dLat = degreesToRadians(coor2.latitude-coor1.latitude);
+  const dLon = degreesToRadians(coor2.longitude-coor1.longitude);
 
-  lat1 = degreesToRadians(lat1);
-  lat2 = degreesToRadians(lat2);
+  const lat1 = degreesToRadians(coor1.latitude);
+  const lat2 = degreesToRadians(coor2.latitude);
 
   const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
           Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
@@ -46,7 +58,7 @@ function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
  * @param {number} lat - latitude
  * @param {number} long - longitude
  * 
- * @returns {gpsPoint}
+ * @returns {gpsPoint} - a GPS point object
  */
 function gpsPoint(lat, long){
     return {latitude : lat, longitude : long}
@@ -100,7 +112,7 @@ function emissionFromGPSPoints(start, end, locomotionType) {
         console.log("Undefined end point") 
         return -1;
     }
-    return module.exports.emissionForDistance(distanceInKmBetweenEarthCoordinates(start.latitude, start.longitude, end.latitude, end.longitude), locomotionType);
+    return module.exports.emissionForDistance(distanceInKmBetweenEarthCoordinates(start, end), locomotionType);
 };
 
 
